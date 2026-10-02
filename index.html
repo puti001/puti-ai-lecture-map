@@ -1603,6 +1603,7 @@ html&gt;body{padding:0}&lt;/style&gt;
   #puti-ai-lecture-map-v1 .map-notes, #puti-ai-lecture-map-v1 .map-sources, #puti-ai-lecture-map-v1 footer { margin-top:12px; }
   @media(max-width:760px) {
     #puti-ai-lecture-map-v1 .taiwan-map { height:clamp(520px,125vw,650px); }
+    #puti-ai-lecture-map-v1 .taiwan-map { touch-action:pan-y; }
     #puti-ai-lecture-map-v1 .label-rail { position:static; width:100%; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; margin-top:10px; padding:0 8px; }
     #puti-ai-lecture-map-v1 .school-label { position:static; }
     #puti-ai-lecture-map-v1 .label-rail .btn { width:100%; }
@@ -1716,7 +1717,8 @@ html&gt;body{padding:0}&lt;/style&gt;
     pins.append(&#x27;path&#x27;).attr(&#x27;class&#x27;,&#x27;pin-shape&#x27;).attr(&#x27;d&#x27;,&#x27;M0,0 L-12,-17 A15,15 0 1,1 12,-17 Z&#x27;);
     pins.append(&#x27;circle&#x27;).attr(&#x27;class&#x27;,&#x27;pin-center&#x27;).attr(&#x27;cx&#x27;,0).attr(&#x27;cy&#x27;,-27).attr(&#x27;r&#x27;,10);
     pins.append(&#x27;text&#x27;).attr(&#x27;class&#x27;,&#x27;pin-number&#x27;).attr(&#x27;x&#x27;,0).attr(&#x27;y&#x27;,-23).attr(&#x27;text-anchor&#x27;,&#x27;middle&#x27;).text(l=&gt;num(l.numbers[0]));
-    svg.call(zoom);updateMarks();showDetail();initialized=true;
+    if(width&lt;=760)svg.on(&#x27;.zoom&#x27;,null);else svg.call(zoom);
+    updateMarks();showDetail();initialized=true;
   }
   select.onchange=()=&gt;{county=select.value;transform=d3.zoomIdentity;selected=activeLocations()[0]?.place||data.locations[0].place;initialized=false;draw();svg.call(zoom.transform,transform);save();};
   root.querySelectorAll(&#x27;[data-zoom]&#x27;).forEach(b=&gt;b.onclick=()=&gt;{svg.call(zoom.scaleBy,+b.dataset.zoom);save();});
